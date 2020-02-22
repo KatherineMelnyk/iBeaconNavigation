@@ -9,10 +9,10 @@ import (
 	"strconv"
 )
 
-func beaconsValue(file string) []beacon {
+func BeaconsValue(file string) []Beacon {
 	csvFile, _ := os.Open(file)
 	reader := csv.NewReader(bufio.NewReader(csvFile))
-	var beacons []beacon
+	var beacons []Beacon
 	for {
 		line, error := reader.Read()
 		if error == io.EOF {
@@ -22,7 +22,7 @@ func beaconsValue(file string) []beacon {
 		}
 		X, _ := strconv.ParseFloat(line[1], 64)
 		Y, _ := strconv.ParseFloat(line[2], 64)
-		beacons = append(beacons, beacon{
+		beacons = append(beacons, Beacon{
 			name: line[0],
 			x:    X,
 			y:    Y,
@@ -31,10 +31,10 @@ func beaconsValue(file string) []beacon {
 	return beacons[1:]
 }
 
-func obstaclesValue(file string) []obstacle {
+func obstaclesValue(file string) []Obstacle {
 	csvFile, _ := os.Open(file)
 	reader := csv.NewReader(bufio.NewReader(csvFile))
-	var obstacles []obstacle
+	var obstacles []Obstacle
 	for {
 		line, error := reader.Read()
 		if error == io.EOF {
@@ -46,7 +46,7 @@ func obstaclesValue(file string) []obstacle {
 		X, _ := strconv.ParseFloat(line[1], 64)
 		Y, _ := strconv.ParseFloat(line[2], 64)
 		typeObstacle, _ := strconv.ParseFloat(line[3], 64)
-		obstacles = append(obstacles, obstacle{
+		obstacles = append(obstacles, Obstacle{
 			id:             int(ID),
 			x:              X,
 			y:              Y,
@@ -77,11 +77,11 @@ func RSSIMeasurements(file string) [][]int {
 	return rss
 }
 
-func coordinates(file string) []object {
+func ObjectValue(file string) []Object {
 	csvFile, _ := os.Open(file)
 	reader := csv.NewReader(bufio.NewReader(csvFile))
-	var objects []object
-	var obj object
+	var objects []Object
+	var obj Object
 	for i := 0; ; i++ {
 		line, err := reader.Read()
 		if err == io.EOF {
@@ -98,7 +98,7 @@ func coordinates(file string) []object {
 			obj.lines = append(obj.lines, i)
 		} else {
 			objects = append(objects, obj)
-			obj = object{lines: []int{i}, x: x, y: y}
+			obj = Object{lines: []int{i}, x: x, y: y}
 		}
 	}
 	objects = append(objects, obj)
